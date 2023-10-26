@@ -5,6 +5,7 @@ import com.example.UMS.features.role.model.Role;
 import com.example.UMS.features.role.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -45,6 +46,17 @@ public class RoleServiceImpl implements RoleService {
 
     public List<Role> findRolesByNames(List<String> roleNames) {
         return roleDao.findRolesByNames(roleNames);
+    }
+
+    @Override
+    @Transactional
+    public void initializeSuperAdminRole() {
+        String superAdminRoleName = "SUPERADMIN";
+        if (!doesRoleExistByName(superAdminRoleName)) {
+            Role superAdminRole = new Role();
+            superAdminRole.setName(superAdminRoleName);
+            createRole(superAdminRole);
+        }
     }
 
 }

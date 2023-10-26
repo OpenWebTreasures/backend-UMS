@@ -15,4 +15,6 @@ public interface UserService {
     void deleteById(Long id);
 
     boolean existsByUsername(String username);
+
+    void initializeSuperAdminUser();
 }

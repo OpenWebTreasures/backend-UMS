@@ -33,7 +33,6 @@ public class AuthController {
 
     private final UserService userService;
     private final RoleService roleService;
-    @Autowired
     private final PasswordEncoder passwordEncoder;
 
     private final AuthenticationManager authenticationManager;

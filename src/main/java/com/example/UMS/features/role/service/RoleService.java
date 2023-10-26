@@ -16,4 +16,6 @@ public interface RoleService {
     Role findRoleByName(String name);
 
     List<Role> findRolesByNames(List<String> roleNames);
+
+    void initializeSuperAdminRole();
 }

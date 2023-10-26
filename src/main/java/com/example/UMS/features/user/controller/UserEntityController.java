@@ -4,6 +4,8 @@ import com.example.UMS.features.user.dto.UserEntityDto;
 import com.example.UMS.features.user.model.UserEntity;
 import com.example.UMS.features.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,5 +39,15 @@ public class UserEntityController {
     @DeleteMapping("/{id}")
     public void deleteUserById(@PathVariable Long id) {
         userService.deleteById(id);
+    }
+
+    @GetMapping("/details")
+    @ResponseBody
+    public UserDetails getUserDetails(@AuthenticationPrincipal UserDetails userDetails) {
+        // You can also fetch user details from the service based on the username
+        // For example, assuming you have a method in UserService to get user details by username:
+        // UserDetails userDetails = userService.getUserDetails(userDetails.getUsername());
+
+        return userDetails;
     }
 }
