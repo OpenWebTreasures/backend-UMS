@@ -7,6 +7,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -24,5 +26,14 @@ public class Role {
     private Instant createdOn;
     @UpdateTimestamp
     private Instant lastUpdatedOn;
+
+    @OneToMany
+    @JoinTable(
+            name = "permissions",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "feature_id")
+    )
+    private List<Feature> features = new ArrayList<>();
+
 
 }
