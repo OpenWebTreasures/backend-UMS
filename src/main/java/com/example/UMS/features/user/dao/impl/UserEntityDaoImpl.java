@@ -4,6 +4,7 @@ import com.example.UMS.features.user.dao.UserEntityDao;
 import com.example.UMS.features.user.model.UserEntity;
 import com.example.UMS.features.user.repository.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class UserEntityDaoImpl implements UserEntityDao {
     private final UserEntityRepository userEntityRepository;
 
     @Override
+    @SneakyThrows
     public UserEntity create(UserEntity userEntity) {
         return userEntityRepository.save(userEntity);
     }
