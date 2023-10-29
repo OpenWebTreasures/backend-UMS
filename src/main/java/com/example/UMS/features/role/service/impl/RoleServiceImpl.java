@@ -1,23 +1,23 @@
 package com.example.UMS.features.role.service.impl;
 
+import com.example.UMS.features.role.dao.FeatureDao;
 import com.example.UMS.features.role.dao.RoleDao;
+import com.example.UMS.features.role.model.Feature;
 import com.example.UMS.features.role.model.Role;
 import com.example.UMS.features.role.service.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
 
     private final RoleDao roleDao;
+    private final FeatureDao featureDao;
 
-    @Autowired
-    public RoleServiceImpl(RoleDao roleDao) {
-        this.roleDao = roleDao;
-    }
 
     @Override
     public Role createRole(Role role) {
@@ -56,6 +56,28 @@ public class RoleServiceImpl implements RoleService {
             Role superAdminRole = new Role();
             superAdminRole.setName(superAdminRoleName);
             createRole(superAdminRole);
+        }
+    }
+
+    public void addFeatureToRole(String roleName, String featureName) {
+        Role role = roleDao.findByName(roleName);
+        if (role != null) {
+            Feature feature = featureDao.findByName(featureName);
+            if (feature != null) {
+                role.addFeature(feature);
+                roleDao.update(role);
+            }
+        }
+    }
+
+    public void revokeFeatureFromRole(String roleName, String featureName) {
+        Role role = roleDao.findByName(roleName);
+        if (role != null) {
+            Feature feature = featureDao.findByName(featureName);
+            if (feature != null) {
+                role.revokeFeature(feature);
+                roleDao.update(role);
+            }
         }
     }
 

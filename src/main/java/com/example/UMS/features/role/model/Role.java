@@ -35,5 +35,11 @@ public class Role {
     )
     private List<Feature> features = new ArrayList<>();
 
+    public void addFeature(Feature feature) {
+        features.add(feature);
+    }
 
+    public void revokeFeature(Feature feature) {
+        features.removeIf(f -> f.getId().equals(feature.getId()));
+    }
 }

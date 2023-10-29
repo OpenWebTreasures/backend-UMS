@@ -13,7 +13,6 @@ import java.util.Date;
 
 @Component
 public class JWTGenerator {
-    //private static final KeyPair keyPair = Keys.keyPairFor(SignatureAlgorithm.RS256);
     private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
     public String generateToken(Authentication authentication) {
@@ -27,8 +26,6 @@ public class JWTGenerator {
                 .setExpiration(expireDate)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
-//        System.out.println("New token :");
-//        System.out.println(token);
         return token;
     }
 
@@ -49,8 +46,7 @@ public class JWTGenerator {
                     .parseClaimsJws(token);
             return true;
         } catch (Exception ex) {
-//            throw new AuthenticationCredentialsNotFoundException("JWT was exprired or incorrect", ex.fillInStackTrace());
-            return false;
+            throw new AuthenticationCredentialsNotFoundException("JWT was exprired or incorrect", ex.fillInStackTrace());
         }
     }
 

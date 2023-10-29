@@ -3,6 +3,7 @@ package com.example.UMS.features.user.controller;
 import com.example.UMS.features.user.dto.UserEntityDto;
 import com.example.UMS.features.user.model.UserEntity;
 import com.example.UMS.features.user.service.UserService;
+import com.example.UMS.security.RequiresFeature;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,6 +33,7 @@ public class UserEntityController {
     }
 
     @GetMapping
+    @RequiresFeature("F1")
     public List<UserEntity> getAllUsers() {
         return userService.findAll();
     }

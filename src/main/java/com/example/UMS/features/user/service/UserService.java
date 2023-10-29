@@ -9,6 +9,7 @@ public interface UserService {
     UserEntity create(UserEntityDto userEntityDto);
 
     UserEntity getUserById(Long id);
+    UserEntity getUserByUserName(String userName);
 
     List<UserEntity> findAll();
 

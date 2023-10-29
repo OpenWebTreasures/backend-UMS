@@ -17,5 +17,9 @@ public class Feature {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String featureName;
+
+    @Column(unique = true)
+    private String name;
+
+    private String description;
 }

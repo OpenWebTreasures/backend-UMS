@@ -43,4 +43,9 @@ public class RoleDaoImpl implements RoleDao {
         return roleRepository.findByNames(roleNames);
     }
 
+    public Role update(Role role) {
+        return roleRepository.save(role);
+    }
+
+
 }

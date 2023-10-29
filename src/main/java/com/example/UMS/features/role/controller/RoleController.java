@@ -1,8 +1,10 @@
 package com.example.UMS.features.role.controller;
 
+import com.example.UMS.features.role.dto.FeatureRoleDto;
 import com.example.UMS.features.role.model.Role;
 import com.example.UMS.features.role.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,6 +44,18 @@ public class RoleController {
     @GetMapping("/find/{name}")
     public Role findRoleByName(@PathVariable String name) {
         return roleService.findRoleByName(name);
+    }
+
+    @PostMapping("/assignfeature")
+    public ResponseEntity<String> addFeatureToRole(@RequestBody FeatureRoleDto featureRoleDto) {
+        roleService.addFeatureToRole(featureRoleDto.getRoleName(), featureRoleDto.getFeatureName());
+        return ResponseEntity.ok("ok");
+    }
+
+    @PostMapping("/revokefeature")
+    public ResponseEntity<String> revokeFeatureFromRole(@RequestBody FeatureRoleDto featureRoleDto) {
+        roleService.revokeFeatureFromRole(featureRoleDto.getRoleName(), featureRoleDto.getFeatureName());
+        return ResponseEntity.ok("ok");
     }
 
 }

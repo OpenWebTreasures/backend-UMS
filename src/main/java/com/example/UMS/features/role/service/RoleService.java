@@ -18,4 +18,10 @@ public interface RoleService {
     List<Role> findRolesByNames(List<String> roleNames);
 
     void initializeSuperAdminRole();
+
+    void addFeatureToRole(String roleName, String featureName);
+
+    void revokeFeatureFromRole(String roleName, String featureName);
+
+
 }

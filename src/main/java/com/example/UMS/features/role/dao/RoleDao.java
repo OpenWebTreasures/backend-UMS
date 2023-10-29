@@ -15,6 +15,7 @@ public interface RoleDao {
 
     Role findByName(String name);
 
-
     List<Role> findRolesByNames(List<String> roleNames);
+
+    Role update(Role role);
 }
