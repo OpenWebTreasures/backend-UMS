@@ -1,6 +1,8 @@
 package com.example.UMS.exceptions.errorobject;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -10,6 +12,7 @@ import java.time.Instant;
 @Setter
 @Getter
 @Entity
+@NoArgsConstructor
 @Table(name = "errors")
 public class ErrorObject {
 

@@ -20,17 +20,11 @@ public class AuthorizationAspect {
     private final UserEntityDao userEntityDao;
 
     @Before("@annotation(requiresFeature)")
-    public void checkUserRole(JoinPoint joinPoint, RequiresFeature requiresFeature) {
-        // Get the currently authenticated user's roles (assuming you are using Spring Security)
+    public void checkUserRole(RequiresFeature requiresFeature) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof User) {
-            User user = (User) authentication.getPrincipal();
-
-            // Check if the user has the required role for the specified feature ID
+        if (authentication != null && authentication.getPrincipal() instanceof User user) {
             String feature = requiresFeature.value();
-
             if (userHasRoleForFeature(user.getUsername(), feature)) {
-                // User has the required role, allow the method to proceed
                 return;
             }
         }
