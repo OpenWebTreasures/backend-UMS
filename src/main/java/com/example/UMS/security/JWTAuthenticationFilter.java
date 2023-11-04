@@ -1,6 +1,9 @@
 package com.example.UMS.security;
 
 
+import com.example.UMS.exceptions.errorobject.ErrorObject;
+import com.example.UMS.exceptions.errorobject.ErrorObjectService;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -41,7 +44,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            
         }
     }
 
