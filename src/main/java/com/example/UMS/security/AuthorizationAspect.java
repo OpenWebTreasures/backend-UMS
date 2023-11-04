@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Aspect
 @RequiredArgsConstructor
-public class RoleAuthorizationAspect {
+public class AuthorizationAspect {
 
     private final UserEntityDao userEntityDao;
 

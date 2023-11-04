@@ -20,6 +20,7 @@ public class RoleServiceImpl implements RoleService {
 
 
     @Override
+    @Transactional
     public Role createRole(Role role) {
         return roleDao.create(role);
     }
@@ -48,16 +49,7 @@ public class RoleServiceImpl implements RoleService {
         return roleDao.findRolesByNames(roleNames);
     }
 
-    @Override
-    @Transactional
-    public void initializeSuperAdminRole() {
-        String superAdminRoleName = "SUPERADMIN";
-        if (!doesRoleExistByName(superAdminRoleName)) {
-            Role superAdminRole = new Role();
-            superAdminRole.setName(superAdminRoleName);
-            createRole(superAdminRole);
-        }
-    }
+
 
     public void addFeatureToRole(String roleName, String featureName) {
         Role role = roleDao.findByName(roleName);

@@ -7,30 +7,30 @@ import com.example.UMS.features.user.model.UserEntity;
 import com.example.UMS.features.user.repository.UserEntityRepository;
 import com.example.UMS.features.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
-@RequiredArgsConstructor
 public class UmsApplication {
-
-    private final UserService userService;
-    private final RoleService roleService;
 
     public static void main(String[] args) {
         SpringApplication.run(UmsApplication.class, args);
     }
 
-    @PostConstruct
-    public void initializeSuperAdmin() {
-        roleService.initializeSuperAdminRole();
-        userService.initializeSuperAdminUser();
+    @Bean
+    public ModelMapper modelMapper()
+    {
+        return new ModelMapper();
     }
 
 }

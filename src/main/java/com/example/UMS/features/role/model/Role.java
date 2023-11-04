@@ -1,9 +1,9 @@
 package com.example.UMS.features.role.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -13,10 +13,12 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "role")
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @Column(unique = true, name = "name")
@@ -27,13 +29,17 @@ public class Role {
     @UpdateTimestamp
     private Instant lastUpdatedOn;
 
-    @OneToMany
+    public Role(String name) {
+        this.name = name;
+    }
+
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "permissions",
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "feature_id")
     )
-    private List<Feature> features = new ArrayList<>();
+    private List<Feature> features;
 
     public void addFeature(Feature feature) {
         features.add(feature);
