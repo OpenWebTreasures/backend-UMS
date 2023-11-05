@@ -1,6 +1,5 @@
 package com.example.UMS.features.role.service.impl;
 
-import com.example.UMS.features.role.dao.FeatureDao;
 import com.example.UMS.features.role.dao.RoleDao;
 import com.example.UMS.features.role.model.Feature;
 import com.example.UMS.features.role.model.Role;
@@ -16,7 +15,6 @@ import java.util.List;
 public class RoleServiceImpl implements RoleService {
 
     private final RoleDao roleDao;
-    private final FeatureDao featureDao;
 
 
     @Override
@@ -52,25 +50,25 @@ public class RoleServiceImpl implements RoleService {
 
 
     public void addFeatureToRole(String roleName, String featureName) {
-        Role role = roleDao.findByName(roleName);
-        if (role != null) {
-            Feature feature = featureDao.findByName(featureName);
-            if (feature != null) {
-                role.addFeature(feature);
-                roleDao.update(role);
-            }
-        }
+//        Role role = roleDao.findByName(roleName);
+//        if (role != null) {
+//            Feature feature = Feature.(featureName);
+//            if (feature != null) {
+//                role.addFeature(feature);
+//                roleDao.update(role);
+//            }
+//        }
     }
 
     public void revokeFeatureFromRole(String roleName, String featureName) {
-        Role role = roleDao.findByName(roleName);
-        if (role != null) {
-            Feature feature = featureDao.findByName(featureName);
-            if (feature != null) {
-                role.revokeFeature(feature);
-                roleDao.update(role);
-            }
-        }
+//        Role role = roleDao.findByName(roleName);
+//        if (role != null) {
+//            Feature feature = featureDao.findByName(featureName);
+//            if (feature != null) {
+//                role.revokeFeature(feature);
+//                roleDao.update(role);
+//            }
+//        }
     }
 
 }

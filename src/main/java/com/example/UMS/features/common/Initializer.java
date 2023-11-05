@@ -1,9 +1,9 @@
 package com.example.UMS.features.common;
 
+import com.example.UMS.features.role.model.Feature;
 import com.example.UMS.features.role.model.Role;
 import com.example.UMS.features.role.service.RoleService;
 import com.example.UMS.features.user.dto.UserEntityDto;
-import com.example.UMS.features.user.model.UserEntity;
 import com.example.UMS.features.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -31,7 +31,9 @@ public class Initializer {
     private void createSuperAdminRole() {
         String superAdminRoleName = "SUPERADMIN";
         if (!roleService.doesRoleExistByName(superAdminRoleName)) {
-            roleService.createRole(new Role(superAdminRoleName));
+            Role superAdminRole = new Role(superAdminRoleName);
+            superAdminRole.setFeatures(Feature.getAllFeatures());
+            roleService.createRole(superAdminRole);
         }
     }
 
@@ -54,9 +56,9 @@ public class Initializer {
             roles.add("SUPERADMIN");
             superAdminUser.setRoleNames(roles);
 
+
             // Use create method or another suitable method
-            UserEntity u = userService.create(superAdminUser);
-            System.out.println(u.getId());
+            userService.create(superAdminUser);
         }
     }
 }

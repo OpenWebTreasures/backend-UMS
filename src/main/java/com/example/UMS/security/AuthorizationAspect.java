@@ -36,7 +36,7 @@ public class AuthorizationAspect {
         if (userEntity != null) {
             return userEntity.getRoles().stream()
                     .anyMatch(role -> role.getFeatures().stream()
-                            .anyMatch(f -> f.getName().equals(feature)));
+                            .anyMatch(f -> f.getFeatureName().equals(feature)));
         }
         return false;
     }

@@ -3,7 +3,6 @@ package com.example.UMS.features.role.model;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -33,19 +32,18 @@ public class Role {
         this.name = name;
     }
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "permissions",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "feature_id")
-    )
-    private List<Feature> features;
+    @ElementCollection
+    @CollectionTable(name = "role_features", joinColumns = @JoinColumn(name = "role_id"))
+    @Enumerated(EnumType.STRING)
+    private List<Feature> features = new ArrayList<>();
 
     public void addFeature(Feature feature) {
         features.add(feature);
     }
 
     public void revokeFeature(Feature feature) {
-        features.removeIf(f -> f.getId().equals(feature.getId()));
+        features.removeIf(f -> f == feature);
     }
+
+
 }

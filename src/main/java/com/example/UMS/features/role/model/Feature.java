@@ -1,25 +1,24 @@
 package com.example.UMS.features.role.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.util.List;
 
-import javax.persistence.*;
+public enum Feature {
+    FEATURE_1("FEATURE_1"),
+    FEATURE_2("FEATURE_2"),
+    FEATURE_3("FEATURE_3");
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
-@Table(name = "feature")
-public class Feature {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private final String featureName;
 
-    @Column(unique = true)
-    private String name;
+    Feature(String featureName) {
+        this.featureName = featureName;
+    }
 
-    private String description;
+    public String getFeatureName() {
+        return featureName;
+    }
+
+    public static List<Feature> getAllFeatures() {
+        return List.of(Feature.values());
+    }
+
 }

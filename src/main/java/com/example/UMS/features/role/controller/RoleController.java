@@ -57,5 +57,4 @@ public class RoleController {
         roleService.revokeFeatureFromRole(featureRoleDto.getRoleName(), featureRoleDto.getFeatureName());
         return ResponseEntity.ok("ok");
     }
-
 }

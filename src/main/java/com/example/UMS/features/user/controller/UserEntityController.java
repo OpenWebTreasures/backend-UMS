@@ -46,10 +46,6 @@ public class UserEntityController {
     @GetMapping("/details")
     @ResponseBody
     public UserDetails getUserDetails(@AuthenticationPrincipal UserDetails userDetails) {
-        // You can also fetch user details from the service based on the username
-        // For example, assuming you have a method in UserService to get user details by username:
-        // UserDetails userDetails = userService.getUserDetails(userDetails.getUsername());
-
         return userDetails;
     }
 }
