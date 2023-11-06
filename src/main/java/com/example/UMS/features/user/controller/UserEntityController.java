@@ -43,7 +43,6 @@ public class UserEntityController {
     }
 
     @GetMapping
-    @RequiresFeature("F1")
     public List<UserEntity> getAllUsers() {
         return userService.findAll();
     }

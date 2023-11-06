@@ -51,7 +51,7 @@ public class Initializer {
             superAdminUser.setNationality(Nationality.Tunisian);
             superAdminUser.setEmail("hadjalimazen@gmail.com");
             superAdminUser.setAdress("Bennane, Monastir, Tunisia");
-            superAdminUser.setDate(new Date());
+            superAdminUser.setDatenaissance(new Date());
             List<String> roles = new ArrayList<>();
             roles.add("SUPERADMIN");
             superAdminUser.setRoleNames(roles);

@@ -30,7 +30,7 @@ public class UserEntity {
 
     private String email;
 
-    private Date date;
+    private Date datenaissance;
 
     private Nationality nationality;
 

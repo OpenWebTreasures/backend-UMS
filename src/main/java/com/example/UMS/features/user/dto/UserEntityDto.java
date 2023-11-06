@@ -15,7 +15,7 @@ public class UserEntityDto {
     private String firstname;
     private String lastname;
     private String email;
-    private Date date;
+    private Date datenaissance;
     private Nationality nationality;
     private String adress;
     private String username;
