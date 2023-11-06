@@ -63,4 +63,11 @@ public class UserServiceImpl implements UserService {
         return userDao.existsByUsername(username);
     }
 
+    @Override
+    public UserEntityDto getConnectedUserDetails(String username) {
+        UserEntity userEntity=userDao.getUserByUserName(username);
+        userEntity.setPassword("");
+        return userMapper.toDto(userEntity);
+    }
+
 }

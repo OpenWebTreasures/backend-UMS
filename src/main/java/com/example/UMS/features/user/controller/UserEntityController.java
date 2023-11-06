@@ -5,7 +5,10 @@ import com.example.UMS.features.user.model.UserEntity;
 import com.example.UMS.features.user.service.UserService;
 import com.example.UMS.security.RequiresFeature;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +33,13 @@ public class UserEntityController {
     @GetMapping("/{id}")
     public UserEntity getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
+    }
+
+    @GetMapping("/me")
+    public UserEntityDto getConnectedUserDetails() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        return userService.getConnectedUserDetails(user.getUsername());
     }
 
     @GetMapping

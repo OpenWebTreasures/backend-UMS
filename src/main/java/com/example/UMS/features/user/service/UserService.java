@@ -18,4 +18,6 @@ public interface UserService {
 
     boolean existsByUsername(String username);
 
+    UserEntityDto getConnectedUserDetails(String username);
+
 }
