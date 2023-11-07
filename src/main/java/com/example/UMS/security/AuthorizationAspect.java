@@ -3,7 +3,6 @@ package com.example.UMS.security;
 import com.example.UMS.features.user.dao.UserEntityDao;
 import com.example.UMS.features.user.model.UserEntity;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.security.access.AuthorizationServiceException;

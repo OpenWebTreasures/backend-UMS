@@ -10,6 +10,7 @@ import com.example.UMS.features.user.dto.UserEntityDto;
 import com.example.UMS.features.user.repository.UserEntityRepository;
 import com.example.UMS.features.user.service.UserService;
 import com.example.UMS.security.JWTGenerator;
+import com.example.UMS.security.RequiresFeature;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

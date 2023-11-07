@@ -1,15 +1,15 @@
 package com.example.UMS.features.user.controller;
 
+import com.example.UMS.features.common.ResponseHandler;
 import com.example.UMS.features.user.dto.UserEntityDto;
 import com.example.UMS.features.user.model.UserEntity;
 import com.example.UMS.features.user.service.UserService;
 import com.example.UMS.security.RequiresFeature;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,35 +26,37 @@ public class UserEntityController {
     private final UserService userService;
 
     @PostMapping
-    public UserEntity createUser(@RequestBody UserEntityDto userEntityDto) {
-        return userService.create(userEntityDto);
+    @RequiresFeature("CREATE_USER")
+    public ResponseEntity createUser(@RequestBody UserEntityDto userEntityDto) {
+        return ResponseHandler.successfulResponse(userService.create(userEntityDto));
     }
 
     @GetMapping("/{id}")
-    public UserEntity getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+    @RequiresFeature("FIND_USER_BY_ID")
+    public ResponseEntity getUserById(@PathVariable Long id) {
+        return ResponseHandler.successfulResponse(userService.getUserById(id));
     }
 
     @GetMapping("/me")
-    public UserEntityDto getConnectedUserDetails() {
+    public ResponseEntity getConnectedUserDetails() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
-        return userService.getConnectedUserDetails(user.getUsername());
+        return ResponseHandler.successfulResponse(userService.getConnectedUserDetails(user.getUsername()));
     }
 
     @GetMapping
-    public List<UserEntity> getAllUsers() {
-        return userService.findAll();
+    @RequiresFeature("FIND_ALL_USERS")
+    public ResponseEntity getAllUsers() {
+        return ResponseHandler.successfulResponse(userService.findAll());
+
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUserById(@PathVariable Long id) {
+    @RequiresFeature("DELETE_USER_BY_ID")
+    public ResponseEntity deleteUserById(@PathVariable Long id) {
         userService.deleteById(id);
+        return ResponseHandler.successfulResponse();
+
     }
 
-    @GetMapping("/details")
-    @ResponseBody
-    public UserDetails getUserDetails(@AuthenticationPrincipal UserDetails userDetails) {
-        return userDetails;
-    }
 }

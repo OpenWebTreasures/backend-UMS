@@ -1,8 +1,11 @@
 package com.example.UMS.features.role.controller;
 
+import com.example.UMS.features.common.ResponseHandler;
 import com.example.UMS.features.role.dto.FeatureRoleDto;
 import com.example.UMS.features.role.model.Role;
 import com.example.UMS.features.role.service.RoleService;
+import com.example.UMS.security.RequiresFeature;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,49 +15,47 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/roles")
+@RequiredArgsConstructor
 public class RoleController {
 
     private final RoleService roleService;
 
-    @Autowired
-    public RoleController(RoleService roleService) {
-        this.roleService = roleService;
-    }
-
     @PostMapping
-    public Role createRole(@RequestBody Role role) {
-        return roleService.createRole(role);
+    @RequiresFeature("CREATE_ROLE")
+    public ResponseEntity createRole(@RequestBody Role role) {
+        return ResponseHandler.successfulResponse(roleService.createRole(role));
     }
 
     @GetMapping("/{id}")
-    public Role getRoleById(@PathVariable Long id) {
-        return roleService.getRoleById(id);
+    @RequiresFeature("FIND_ROLE_BY_ID")
+    public ResponseEntity getRoleById(@PathVariable Long id) {
+        return ResponseHandler.successfulResponse(roleService.getRoleById(id));
     }
 
     @GetMapping
-    public List<Role> findAllRoles() {
-        return roleService.findAllRoles();
-    }
-
-    @GetMapping("/exists/{name}")
-    public boolean doesRoleExistByName(@PathVariable String name) {
-        return roleService.doesRoleExistByName(name);
+    @RequiresFeature("FIND_ALL_ROLES")
+    public ResponseEntity findAllRoles() {
+        return ResponseHandler.successfulResponse(roleService.findAllRoles());
     }
 
     @GetMapping("/find/{name}")
-    public Role findRoleByName(@PathVariable String name) {
-        return roleService.findRoleByName(name);
+    @RequiresFeature("FIND_ROLE_BY_NAME")
+    public ResponseEntity findRoleByName(@PathVariable String name) {
+        return ResponseHandler.successfulResponse(roleService.findRoleByName(name));
     }
 
     @PostMapping("/assignfeature")
-    public ResponseEntity<String> addFeatureToRole(@RequestBody FeatureRoleDto featureRoleDto) {
+    @RequiresFeature("ASSIGN_FEATURE_TO_ROLE")
+    public ResponseEntity addFeatureToRole(@RequestBody FeatureRoleDto featureRoleDto) {
         roleService.addFeatureToRole(featureRoleDto.getRoleName(), featureRoleDto.getFeatureName());
-        return ResponseEntity.ok("ok");
+        return ResponseHandler.successfulResponse("{} assigned successfully to {}".formatted(featureRoleDto.getFeatureName(),featureRoleDto.getRoleName()));
     }
 
     @PostMapping("/revokefeature")
-    public ResponseEntity<String> revokeFeatureFromRole(@RequestBody FeatureRoleDto featureRoleDto) {
+    @RequiresFeature("REVOKE_FEATURE_TO_ROLE")
+    public ResponseEntity revokeFeatureFromRole(@RequestBody FeatureRoleDto featureRoleDto) {
         roleService.revokeFeatureFromRole(featureRoleDto.getRoleName(), featureRoleDto.getFeatureName());
-        return ResponseEntity.ok("ok");
+        return ResponseHandler.successfulResponse("{} revoked from {}".formatted(featureRoleDto.getFeatureName(),featureRoleDto.getRoleName()));
+
     }
 }
