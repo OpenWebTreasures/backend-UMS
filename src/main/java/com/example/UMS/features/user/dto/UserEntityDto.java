@@ -19,6 +19,5 @@ public class UserEntityDto {
     private Nationality nationality;
     private String adress;
     private String username;
-    private String password;
-    private List<String> roleNames; // This field will hold the role names.
+    private List<String> roleNames;
 }

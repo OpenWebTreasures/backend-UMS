@@ -1,8 +1,8 @@
 package com.example.UMS.features.user.controller;
 
 import com.example.UMS.features.common.ResponseHandler;
+import com.example.UMS.features.user.dto.CreateUserEntityDto;
 import com.example.UMS.features.user.dto.UserEntityDto;
-import com.example.UMS.features.user.model.UserEntity;
 import com.example.UMS.features.user.service.UserService;
 import com.example.UMS.security.RequiresFeature;
 import lombok.RequiredArgsConstructor;
@@ -12,10 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 @RestController
@@ -27,8 +24,14 @@ public class UserEntityController {
 
     @PostMapping
     @RequiresFeature("CREATE_USER")
-    public ResponseEntity createUser(@RequestBody UserEntityDto userEntityDto) {
-        return ResponseHandler.successfulResponse(userService.create(userEntityDto));
+    public ResponseEntity createUser(@RequestBody CreateUserEntityDto createUserEntityDto) {
+        return ResponseHandler.successfulResponse(userService.create(createUserEntityDto));
+    }
+
+    @GetMapping
+    @RequiresFeature("FIND_ALL_USERS")
+    public ResponseEntity getAllUsers() {
+        return ResponseHandler.successfulResponse(userService.findAll());
     }
 
     @GetMapping("/{id}")
@@ -44,19 +47,12 @@ public class UserEntityController {
         return ResponseHandler.successfulResponse(userService.getConnectedUserDetails(user.getUsername()));
     }
 
-    @GetMapping
-    @RequiresFeature("FIND_ALL_USERS")
-    public ResponseEntity getAllUsers() {
-        return ResponseHandler.successfulResponse(userService.findAll());
-
-    }
 
     @DeleteMapping("/{id}")
     @RequiresFeature("DELETE_USER_BY_ID")
     public ResponseEntity deleteUserById(@PathVariable Long id) {
         userService.deleteById(id);
         return ResponseHandler.successfulResponse();
-
     }
 
 }

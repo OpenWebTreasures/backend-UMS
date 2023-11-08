@@ -26,22 +26,10 @@ public class RoleController {
         return ResponseHandler.successfulResponse(roleService.createRole(role));
     }
 
-    @GetMapping("/{id}")
-    @RequiresFeature("FIND_ROLE_BY_ID")
-    public ResponseEntity getRoleById(@PathVariable Long id) {
-        return ResponseHandler.successfulResponse(roleService.getRoleById(id));
-    }
-
     @GetMapping
     @RequiresFeature("FIND_ALL_ROLES")
     public ResponseEntity findAllRoles() {
         return ResponseHandler.successfulResponse(roleService.findAllRoles());
-    }
-
-    @GetMapping("/find/{name}")
-    @RequiresFeature("FIND_ROLE_BY_NAME")
-    public ResponseEntity findRoleByName(@PathVariable String name) {
-        return ResponseHandler.successfulResponse(roleService.findRoleByName(name));
     }
 
     @PostMapping("/assignfeature")
@@ -56,6 +44,11 @@ public class RoleController {
     public ResponseEntity revokeFeatureFromRole(@RequestBody FeatureRoleDto featureRoleDto) {
         roleService.revokeFeatureFromRole(featureRoleDto.getRoleName(), featureRoleDto.getFeatureName());
         return ResponseHandler.successfulResponse("{} revoked from {}".formatted(featureRoleDto.getFeatureName(),featureRoleDto.getRoleName()));
+    }
 
+    @GetMapping("/{name}")
+    @RequiresFeature("FIND_ROLE_BY_NAME")
+    public ResponseEntity findRoleByName(@PathVariable String name) {
+        return ResponseHandler.successfulResponse(roleService.findRoleByName(name));
     }
 }

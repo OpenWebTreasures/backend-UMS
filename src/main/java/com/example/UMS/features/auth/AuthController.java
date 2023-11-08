@@ -3,9 +3,11 @@ package com.example.UMS.features.auth;
 import com.example.UMS.features.auth.dto.AuthResponseDTO;
 import com.example.UMS.features.auth.dto.LoginDto;
 import com.example.UMS.features.auth.dto.RegisterDto;
+import com.example.UMS.features.common.ResponseHandler;
 import com.example.UMS.features.role.model.Role;
 import com.example.UMS.features.role.repository.RoleRepository;
 import com.example.UMS.features.role.service.RoleService;
+import com.example.UMS.features.user.dto.CreateUserEntityDto;
 import com.example.UMS.features.user.dto.UserEntityDto;
 import com.example.UMS.features.user.repository.UserEntityRepository;
 import com.example.UMS.features.user.service.UserService;
@@ -58,15 +60,15 @@ public class AuthController {
             return new ResponseEntity<>("Username is taken!", HttpStatus.BAD_REQUEST);
         }
 
-        UserEntityDto userEntityDto = new UserEntityDto();
-        userEntityDto.setUsername(registerDto.getUsername());
-        userEntityDto.setPassword(passwordEncoder.encode((registerDto.getPassword())));
+        CreateUserEntityDto createUserEntityDto = new CreateUserEntityDto();
+        createUserEntityDto.setUsername(registerDto.getUsername());
+        createUserEntityDto.setPassword(passwordEncoder.encode((registerDto.getPassword())));
 
-        Role roles = roleService.findRoleByName("user");
-        userEntityDto.setRoleNames(Collections.singletonList(roles.getName()));
+        Role roles = roleService.findRoleByName("USER");
+        createUserEntityDto.setRoleNames(Collections.singletonList(roles.getName()));
 
-        userService.create(userEntityDto);
+        userService.create(createUserEntityDto);
 
-        return new ResponseEntity<>("UserEntity registered success!", HttpStatus.OK);
+        return ResponseHandler.successfulResponse("User Registred");
     }
 }

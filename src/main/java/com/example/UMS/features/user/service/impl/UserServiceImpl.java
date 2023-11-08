@@ -1,22 +1,15 @@
 package com.example.UMS.features.user.service.impl;
 
-import com.example.UMS.features.common.Nationality;
-import com.example.UMS.features.role.dao.RoleDao;
-import com.example.UMS.features.role.model.Role;
 import com.example.UMS.features.user.dao.UserEntityDao;
+import com.example.UMS.features.user.dto.CreateUserEntityDto;
 import com.example.UMS.features.user.dto.UserEntityDto;
 import com.example.UMS.features.user.mappers.UserMapper;
 import com.example.UMS.features.user.model.UserEntity;
 import com.example.UMS.features.user.service.UserService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,23 +17,20 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserEntityDao userDao;
-    private final RoleDao roleDao;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
 
 
     @Override
-    public UserEntity create(UserEntityDto userEntityDto) {
-        UserEntity userEntity = userMapper.toEntity(userEntityDto);
-        List<Role> roles = roleDao.findRolesByNames(userEntityDto.getRoleNames());
-        userEntity.setRoles(roles);
-        userEntity.setPassword(passwordEncoder.encode(userEntityDto.getPassword()));
+    public UserEntity create(CreateUserEntityDto createUserEntityDto) {
+        UserEntity userEntity = userMapper.toEntity(createUserEntityDto);
+        userEntity.setPassword(passwordEncoder.encode(createUserEntityDto.getPassword()));
         return userDao.create(userEntity);
     }
 
     @Override
-    public UserEntity getUserById(Long id) {
-        return userDao.getUserById(id);
+    public UserEntityDto getUserById(Long id) {
+        return userMapper.toDto(userDao.getUserById(id));
     }
 
     @Override
@@ -65,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntityDto getConnectedUserDetails(String username) {
-        UserEntity userEntity=userDao.getUserByUserName(username);
+        UserEntity userEntity = userDao.getUserByUserName(username);
         userEntity.setPassword("");
         return userMapper.toDto(userEntity);
     }

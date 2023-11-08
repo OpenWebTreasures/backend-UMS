@@ -3,6 +3,7 @@ package com.example.UMS.features.common;
 import com.example.UMS.features.role.model.Feature;
 import com.example.UMS.features.role.model.Role;
 import com.example.UMS.features.role.service.RoleService;
+import com.example.UMS.features.user.dto.CreateUserEntityDto;
 import com.example.UMS.features.user.dto.UserEntityDto;
 import com.example.UMS.features.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +44,7 @@ public class Initializer {
         String superAdminPassword = "superadmin";
 
         if (!userService.existsByUsername(superAdminUsername)) {
-            UserEntityDto superAdminUser = new UserEntityDto();
+            CreateUserEntityDto superAdminUser = new CreateUserEntityDto();
             superAdminUser.setUsername(superAdminUsername);
             superAdminUser.setPassword(superAdminPassword);
             superAdminUser.setFirstname("Mazen");

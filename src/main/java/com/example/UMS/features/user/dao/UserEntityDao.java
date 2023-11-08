@@ -9,6 +9,7 @@ public interface UserEntityDao {
     UserEntity create(UserEntity userEntity);
 
     UserEntity getUserById(Long id);
+
     UserEntity getUserByUserName(String userName);
 
     List<UserEntity> findAll();

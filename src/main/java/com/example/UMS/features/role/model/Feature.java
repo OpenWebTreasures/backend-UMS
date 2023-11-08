@@ -3,7 +3,7 @@ package com.example.UMS.features.role.model;
 import java.util.List;
 
 public enum Feature {
-    FEATURE_1("FEATURE_1"),
+    GET_ALL_FEATURES("GET_ALL_FEATURES"),
     FEATURE_2("FEATURE_2"),
     FEATURE_3("FEATURE_3"),
     FIND_ROLE_BY_ID("FIND_ROLE_BY_ID"),

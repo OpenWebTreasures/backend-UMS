@@ -2,6 +2,7 @@ package com.example.UMS.features.role.model;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -28,14 +29,14 @@ public class Role {
     @UpdateTimestamp
     private Instant lastUpdatedOn;
 
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "role_features", joinColumns = @JoinColumn(name = "role_id"))
+    @Enumerated(EnumType.STRING)
+    private List<Feature> features;
+
     public Role(String name) {
         this.name = name;
     }
-
-    @ElementCollection
-    @CollectionTable(name = "role_features", joinColumns = @JoinColumn(name = "role_id"))
-    @Enumerated(EnumType.STRING)
-    private List<Feature> features = new ArrayList<>();
 
     public void addFeature(Feature feature) {
         features.add(feature);
@@ -44,6 +45,5 @@ public class Role {
     public void revokeFeature(Feature feature) {
         features.removeIf(f -> f == feature);
     }
-
 
 }
