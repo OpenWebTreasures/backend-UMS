@@ -4,6 +4,7 @@ import com.example.UMS.features.auth.dto.AuthResponseDTO;
 import com.example.UMS.features.auth.dto.LoginDto;
 import com.example.UMS.features.auth.dto.RegisterDto;
 import com.example.UMS.features.common.ResponseHandler;
+import com.example.UMS.features.role.dto.RoleDto;
 import com.example.UMS.features.role.model.Role;
 import com.example.UMS.features.role.repository.RoleRepository;
 import com.example.UMS.features.role.service.RoleService;
@@ -64,8 +65,9 @@ public class AuthController {
         createUserEntityDto.setUsername(registerDto.getUsername());
         createUserEntityDto.setPassword(passwordEncoder.encode((registerDto.getPassword())));
 
-        Role roles = roleService.findRoleByName("USER");
-        createUserEntityDto.setRoleNames(Collections.singletonList(roles.getName()));
+
+        RoleDto role = roleService.findRoleByName("USER");
+        createUserEntityDto.setRoleNames(Collections.singletonList(role.getName()));
 
         userService.create(createUserEntityDto);
 

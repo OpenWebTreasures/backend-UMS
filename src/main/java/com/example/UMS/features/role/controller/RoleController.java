@@ -2,6 +2,7 @@ package com.example.UMS.features.role.controller;
 
 import com.example.UMS.features.common.ResponseHandler;
 import com.example.UMS.features.role.dto.FeatureRoleDto;
+import com.example.UMS.features.role.dto.RoleDto;
 import com.example.UMS.features.role.model.Role;
 import com.example.UMS.features.role.service.RoleService;
 import com.example.UMS.security.RequiresFeature;
@@ -22,8 +23,8 @@ public class RoleController {
 
     @PostMapping
     @RequiresFeature("CREATE_ROLE")
-    public ResponseEntity createRole(@RequestBody Role role) {
-        return ResponseHandler.successfulResponse(roleService.createRole(role));
+    public ResponseEntity createRole(@RequestBody RoleDto roleDto) {
+        return ResponseHandler.successfulResponse(roleService.createRole(roleDto));
     }
 
     @GetMapping

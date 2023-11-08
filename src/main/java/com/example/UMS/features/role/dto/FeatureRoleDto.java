@@ -7,7 +7,6 @@ import lombok.*;
 @Getter
 @Setter
 public class FeatureRoleDto {
-
     private String featureName;
     private String roleName;
 }

@@ -22,10 +22,10 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserEntity create(CreateUserEntityDto createUserEntityDto) {
+    public UserEntityDto create(CreateUserEntityDto createUserEntityDto) {
         UserEntity userEntity = userMapper.toEntity(createUserEntityDto);
         userEntity.setPassword(passwordEncoder.encode(createUserEntityDto.getPassword()));
-        return userDao.create(userEntity);
+        return userMapper.toDto(userDao.create(userEntity));
     }
 
     @Override
@@ -34,13 +34,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity getUserByUserName(String userName) {
-        return userDao.getUserByUserName(userName);
+    public UserEntityDto getUserByUserName(String userName) {
+        return userMapper.toDto(userDao.getUserByUserName(userName));
     }
 
     @Override
-    public List<UserEntity> findAll() {
-        return userDao.findAll();
+    public List<UserEntityDto> findAll() {
+        return userMapper.toDtos(userDao.findAll());
     }
 
     @Override

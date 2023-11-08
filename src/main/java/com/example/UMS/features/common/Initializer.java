@@ -1,5 +1,6 @@
 package com.example.UMS.features.common;
 
+import com.example.UMS.features.role.dto.RoleDto;
 import com.example.UMS.features.role.model.Feature;
 import com.example.UMS.features.role.model.Role;
 import com.example.UMS.features.role.service.RoleService;
@@ -26,15 +27,25 @@ public class Initializer {
     @PostConstruct
     public void startInitializer() {
         createSuperAdminRole();
+        createUserRole();
         createSuperAdminUser();
     }
 
     private void createSuperAdminRole() {
         String superAdminRoleName = "SUPERADMIN";
         if (!roleService.doesRoleExistByName(superAdminRoleName)) {
-            Role superAdminRole = new Role(superAdminRoleName);
+            RoleDto superAdminRole = new RoleDto();
+            superAdminRole.setName(superAdminRoleName);
             superAdminRole.setFeatures(Feature.getAllFeatures());
             roleService.createRole(superAdminRole);
+        }
+    }
+    private void createUserRole() {
+        String userRoleName = "USER";
+        if (!roleService.doesRoleExistByName(userRoleName)) {
+            RoleDto userRole = new RoleDto();
+            userRole.setName(userRoleName);
+            roleService.createRole(userRole);
         }
     }
 

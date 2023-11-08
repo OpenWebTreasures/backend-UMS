@@ -11,5 +11,4 @@ import lombok.Setter;
 @Setter
 public class ListItemRoleDto {
     private String name;
-
 }

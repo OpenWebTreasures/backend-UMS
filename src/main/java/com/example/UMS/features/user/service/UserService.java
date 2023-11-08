@@ -7,13 +7,13 @@ import com.example.UMS.features.user.model.UserEntity;
 import java.util.List;
 
 public interface UserService {
-    UserEntity create(CreateUserEntityDto createUserEntityDto);
+    UserEntityDto create(CreateUserEntityDto createUserEntityDto);
 
     UserEntityDto getUserById(Long id);
 
-    UserEntity getUserByUserName(String userName);
+    UserEntityDto getUserByUserName(String userName);
 
-    List<UserEntity> findAll();
+    List<UserEntityDto> findAll();
 
     void deleteById(Long id);
 

@@ -1,12 +1,13 @@
 package com.example.UMS.features.role.service.impl;
 
 import com.example.UMS.features.role.dao.RoleDao;
+import com.example.UMS.features.role.dto.RoleDto;
+import com.example.UMS.features.role.mapper.RoleMapper;
 import com.example.UMS.features.role.model.Feature;
 import com.example.UMS.features.role.model.Role;
 import com.example.UMS.features.role.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,22 +16,21 @@ import java.util.List;
 public class RoleServiceImpl implements RoleService {
 
     private final RoleDao roleDao;
-
+    private final RoleMapper roleMapper;
 
     @Override
-    @Transactional
-    public Role createRole(Role role) {
-        return roleDao.create(role);
+    public RoleDto createRole(RoleDto roleDto) {
+        return roleMapper.toDto(roleDao.create(roleMapper.toEntity(roleDto)));
     }
 
     @Override
-    public Role getRoleById(Long id) {
-        return roleDao.getRoleById(id);
+    public RoleDto getRoleById(Long id) {
+        return roleMapper.toDto(roleDao.getRoleById(id));
     }
 
     @Override
-    public List<Role> findAllRoles() {
-        return roleDao.findAll();
+    public List<RoleDto> findAllRoles() {
+        return roleMapper.toDtos(roleDao.findAll());
     }
 
     @Override
@@ -39,12 +39,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role findRoleByName(String name) {
-        return roleDao.findByName(name);
-    }
-
-    public List<Role> findRolesByNames(List<String> roleNames) {
-        return roleDao.findRolesByNames(roleNames);
+    public RoleDto findRoleByName(String name) {
+        return roleMapper.toDto(roleDao.findByName(name));
     }
 
 
@@ -61,6 +57,4 @@ public class RoleServiceImpl implements RoleService {
             role.revokeFeature(Feature.valueOf(featureName));
         }
     }
-
-
 }

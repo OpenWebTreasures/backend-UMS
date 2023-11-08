@@ -1,21 +1,20 @@
 package com.example.UMS.features.role.service;
 
+import com.example.UMS.features.role.dto.RoleDto;
 import com.example.UMS.features.role.model.Role;
 
 import java.util.List;
 
 public interface RoleService {
-    Role createRole(Role role);
+    RoleDto createRole(RoleDto roleDto);
 
-    Role getRoleById(Long id);
+    RoleDto getRoleById(Long id);
 
-    List<Role> findAllRoles();
+    List<RoleDto> findAllRoles();
 
     boolean doesRoleExistByName(String name);
 
-    Role findRoleByName(String name);
-
-    List<Role> findRolesByNames(List<String> roleNames);
+    RoleDto findRoleByName(String name);
 
     void addFeatureToRole(String roleName, String featureName);
 
