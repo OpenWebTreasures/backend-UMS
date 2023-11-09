@@ -1,7 +1,6 @@
 package com.example.UMS.features.user.service;
 
-import com.example.UMS.features.user.dto.CreateUserEntityDto;
-import com.example.UMS.features.user.dto.UserEntityDto;
+import com.example.UMS.features.user.dto.*;
 import com.example.UMS.features.user.model.UserEntity;
 
 import java.util.List;
@@ -21,4 +20,9 @@ public interface UserService {
 
     UserEntityDto getConnectedUserDetails(String username);
 
+    void changeUserPassword(ChangeUserPasswordDto changeUserPasswordDto);
+
+    void updateRoles(ChangeUserRolesDto changeUserRolesDto);
+
+    void updateUserDetails(String username, ChangeUserDetailsDto changeUserDetailsDto);
 }

@@ -17,4 +17,10 @@ public interface UserEntityDao {
     void deleteById(Long id);
 
     boolean existsByUsername(String username);
+
+    void updatePassword(String username, String newPassword);
+
+    void updateRoles(String username, List<String> rolesNames);
+
+    void updateUser(UserEntity userEntity);
 }

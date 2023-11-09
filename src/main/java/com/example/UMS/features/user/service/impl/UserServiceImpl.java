@@ -1,8 +1,7 @@
 package com.example.UMS.features.user.service.impl;
 
 import com.example.UMS.features.user.dao.UserEntityDao;
-import com.example.UMS.features.user.dto.CreateUserEntityDto;
-import com.example.UMS.features.user.dto.UserEntityDto;
+import com.example.UMS.features.user.dto.*;
 import com.example.UMS.features.user.mappers.UserMapper;
 import com.example.UMS.features.user.model.UserEntity;
 import com.example.UMS.features.user.service.UserService;
@@ -58,6 +57,29 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = userDao.getUserByUserName(username);
         userEntity.setPassword("");
         return userMapper.toDto(userEntity);
+    }
+
+    @Override
+    public void changeUserPassword(ChangeUserPasswordDto changeUserPasswordDto) {
+        userDao.updatePassword(changeUserPasswordDto.getUsername(), passwordEncoder.encode(changeUserPasswordDto.getPassword()));
+    }
+
+    @Override
+    public void updateRoles(ChangeUserRolesDto changeUserRolesDto) {
+        userDao.updateRoles(changeUserRolesDto.getUsername(), changeUserRolesDto.getRoleNames());
+    }
+
+    @Override
+    public void updateUserDetails(String username, ChangeUserDetailsDto changeUserDetailsDto) {
+        UserEntity userEntity =  userDao.getUserByUserName(username);
+        userEntity.setUsername(changeUserDetailsDto.getUsername());
+        userEntity.setFirstname(changeUserDetailsDto.getFirstname());
+        userEntity.setLastname(changeUserDetailsDto.getLastname());
+        userEntity.setEmail(changeUserDetailsDto.getEmail());
+        userEntity.setDatenaissance(changeUserDetailsDto.getDatenaissance());
+        userEntity.setNationality(changeUserDetailsDto.getNationality());
+        userEntity.setAdress(changeUserDetailsDto.getAdress());
+        userDao.updateUser(userEntity);
     }
 
 }

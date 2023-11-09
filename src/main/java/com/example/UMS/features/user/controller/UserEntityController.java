@@ -1,8 +1,10 @@
 package com.example.UMS.features.user.controller;
 
 import com.example.UMS.features.common.ResponseHandler;
+import com.example.UMS.features.user.dto.ChangeUserDetailsDto;
+import com.example.UMS.features.user.dto.ChangeUserPasswordDto;
+import com.example.UMS.features.user.dto.ChangeUserRolesDto;
 import com.example.UMS.features.user.dto.CreateUserEntityDto;
-import com.example.UMS.features.user.dto.UserEntityDto;
 import com.example.UMS.features.user.service.UserService;
 import com.example.UMS.security.RequiresFeature;
 import lombok.RequiredArgsConstructor;
@@ -28,16 +30,28 @@ public class UserEntityController {
         return ResponseHandler.successfulResponse(userService.create(createUserEntityDto));
     }
 
-    @GetMapping
-    @RequiresFeature("FIND_ALL_USERS")
-    public ResponseEntity getAllUsers() {
-        return ResponseHandler.successfulResponse(userService.findAll());
+    @PostMapping("/changeuserpassword")
+    @RequiresFeature("CHANGE_ANY_USER_PASSWORD")
+    public ResponseEntity changeUserPassword(@RequestBody ChangeUserPasswordDto changeUserPasswordDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        changeUserPasswordDto.setUsername(user.getUsername());
+        userService.changeUserPassword(changeUserPasswordDto);
+        return ResponseHandler.successfulResponse();
     }
 
-    @GetMapping("/{id}")
-    @RequiresFeature("FIND_USER_BY_ID")
-    public ResponseEntity getUserById(@PathVariable Long id) {
-        return ResponseHandler.successfulResponse(userService.getUserById(id));
+    @PostMapping("/changeselfpassword")
+    @RequiresFeature("CHANGE_SELF_PASSWORD")
+    public ResponseEntity changeSelfPassword(@RequestBody ChangeUserPasswordDto changeUserPasswordDto) {
+        userService.changeUserPassword(changeUserPasswordDto);
+        return ResponseHandler.successfulResponse();
+    }
+
+    @PostMapping("/changeroles")
+    @RequiresFeature("CHANGE_USER_ROLES")
+    public ResponseEntity changeUserRoles(@RequestBody ChangeUserRolesDto changeUserRolesDto) {
+        userService.updateRoles(changeUserRolesDto);
+        return ResponseHandler.successfulResponse();
     }
 
     @GetMapping("/me")
@@ -47,6 +61,33 @@ public class UserEntityController {
         return ResponseHandler.successfulResponse(userService.getConnectedUserDetails(user.getUsername()));
     }
 
+    @GetMapping
+    @RequiresFeature("FIND_ALL_USERS")
+    public ResponseEntity getAllUsers() {
+        return ResponseHandler.successfulResponse(userService.findAll());
+    }
+
+    @PutMapping("/updateuserdetails/{username}")
+    @RequiresFeature("UPDATE_ANY_USER_DETAILS")
+    public ResponseEntity updateAnyUserDetails(@PathVariable String username, @RequestBody ChangeUserDetailsDto changeUserDetailsDto) {
+        userService.updateUserDetails(username,changeUserDetailsDto);
+        return ResponseHandler.successfulResponse();
+    }
+
+    @PutMapping("/updateselfdetails")
+    @RequiresFeature("UPDATE_SELF_USER_DETAILS")
+    public ResponseEntity updateSelfUserDetails(@RequestBody ChangeUserDetailsDto changeUserDetailsDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        userService.updateUserDetails(user.getUsername(),changeUserDetailsDto);
+        return ResponseHandler.successfulResponse();
+    }
+
+    @GetMapping("/{id}")
+    @RequiresFeature("FIND_USER_BY_ID")
+    public ResponseEntity getUserById(@PathVariable Long id) {
+        return ResponseHandler.successfulResponse(userService.getUserById(id));
+    }
 
     @DeleteMapping("/{id}")
     @RequiresFeature("DELETE_USER_BY_ID")
