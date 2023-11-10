@@ -20,5 +20,4 @@ public interface RoleService {
 
     void revokeFeatureFromRole(String roleName, String featureName);
 
-
 }

@@ -48,13 +48,16 @@ public class RoleServiceImpl implements RoleService {
         Role role = roleDao.findByName(roleName);
         if (role != null) {
             role.addFeature(Feature.valueOf(featureName));
+            roleDao.update(role);
         }
     }
 
     public void revokeFeatureFromRole(String roleName, String featureName) {
+
         Role role = roleDao.findByName(roleName);
         if (role != null) {
             role.revokeFeature(Feature.valueOf(featureName));
+            roleDao.update(role);
         }
     }
 }
