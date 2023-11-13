@@ -31,19 +31,17 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collections;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
     private final UserService userService;
     private final RoleService roleService;
-    private final PasswordEncoder passwordEncoder;
 
     private final AuthenticationManager authenticationManager;
     private final JWTGenerator jwtGenerator;
 
-
-    @PostMapping("login")
+    @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -51,20 +49,26 @@ public class AuthController {
                         loginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtGenerator.generateToken(authentication);
+        System.out.println(token);
         return new ResponseEntity<>(new AuthResponseDTO(token), HttpStatus.OK);
     }
 
 
-    @PostMapping("register")
+    @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
         if (userService.existsByUsername(registerDto.getUsername())) {
             return new ResponseEntity<>("Username is taken!", HttpStatus.BAD_REQUEST);
         }
 
         CreateUserEntityDto createUserEntityDto = new CreateUserEntityDto();
+        createUserEntityDto.setFirstname(registerDto.getFirstname());
+        createUserEntityDto.setLastname(registerDto.getLastname());
+        createUserEntityDto.setEmail(registerDto.getEmail());
+        createUserEntityDto.setDatenaissance(registerDto.getDate());
+        createUserEntityDto.setNationality(registerDto.getNationality());
+        createUserEntityDto.setAdress(registerDto.getAdress());
         createUserEntityDto.setUsername(registerDto.getUsername());
-        createUserEntityDto.setPassword(passwordEncoder.encode((registerDto.getPassword())));
-
+        createUserEntityDto.setPassword(registerDto.getPassword());
 
         RoleDto role = roleService.findRoleByName("USER");
         createUserEntityDto.setRoleNames(Collections.singletonList(role.getName()));

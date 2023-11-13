@@ -39,7 +39,7 @@ public class UserMapper {
     public UserEntityDto toDto(UserEntity userEntity) {
         UserEntityDto userEntityDto = modelMapper.map(userEntity, UserEntityDto.class);
         userEntityDto.setRoleNames(userEntity.getRoles().stream()
-                .map(Role::getName)
+                .map(role-> role.getName())
                 .collect(Collectors.toList()));
         return userEntityDto;
     }
