@@ -7,6 +7,7 @@ import com.example.UMS.features.role.model.Role;
 import com.example.UMS.features.role.service.RoleService;
 import com.example.UMS.security.RequiresFeature;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
+@Slf4j
 @RestController
 @RequestMapping("api/v1/roles")
 @RequiredArgsConstructor
@@ -24,6 +26,7 @@ public class RoleController {
     @PostMapping
     @RequiresFeature("CREATE_ROLE")
     public ResponseEntity createRole(@RequestBody RoleDto roleDto) {
+        log.warn("Creating New Role :"+roleDto.toString());
         return ResponseHandler.successfulResponse(roleService.createRole(roleDto));
     }
 
@@ -36,6 +39,7 @@ public class RoleController {
     @PostMapping("/assignfeature")
     @RequiresFeature("ASSIGN_FEATURE_TO_ROLE")
     public ResponseEntity addFeatureToRole(@RequestBody FeatureRoleDto featureRoleDto) {
+        log.warn(String.format("Service call : Assign Feature: %s To Role : %s", featureRoleDto.getFeatureName(),featureRoleDto.getRoleName()));
         roleService.addFeatureToRole(featureRoleDto.getRoleName(), featureRoleDto.getFeatureName());
         return ResponseHandler.successfulResponse("{} assigned successfully to {}".formatted(featureRoleDto.getFeatureName(),featureRoleDto.getRoleName()));
     }
@@ -43,6 +47,8 @@ public class RoleController {
     @PostMapping("/revokefeature")
     @RequiresFeature("REVOKE_FEATURE_TO_ROLE")
     public ResponseEntity revokeFeatureFromRole(@RequestBody FeatureRoleDto featureRoleDto) {
+        log.warn(String.format("Service call : Revoke Feature: %s from Role : %s", featureRoleDto.getFeatureName(),featureRoleDto.getRoleName()));
+
         roleService.revokeFeatureFromRole(featureRoleDto.getRoleName(), featureRoleDto.getFeatureName());
         return ResponseHandler.successfulResponse("{} revoked from {}".formatted(featureRoleDto.getFeatureName(),featureRoleDto.getRoleName()));
     }

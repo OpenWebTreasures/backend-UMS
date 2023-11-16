@@ -19,7 +19,7 @@ public class FeatureController {
 
     @GetMapping
     @RequiresFeature("GET_ALL_FEATURES")
-    public ResponseEntity findAllRoles() {
+    public ResponseEntity getAllFeatures() {
         return ResponseHandler.successfulResponse(Feature.getAllFeatures());
     }
 

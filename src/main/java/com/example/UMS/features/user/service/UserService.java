@@ -5,6 +5,7 @@ import com.example.UMS.features.user.model.UserEntity;
 
 import java.util.List;
 
+
 public interface UserService {
     UserEntityDto create(CreateUserEntityDto createUserEntityDto);
 

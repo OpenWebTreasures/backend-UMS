@@ -6,11 +6,13 @@ import com.example.UMS.features.user.mappers.UserMapper;
 import com.example.UMS.features.user.model.UserEntity;
 import com.example.UMS.features.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -22,6 +24,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntityDto create(CreateUserEntityDto createUserEntityDto) {
+        log.info("Service create UserEntity called details:" + createUserEntityDto.toString());
         UserEntity userEntity = userMapper.toEntity(createUserEntityDto);
         userEntity.setPassword(passwordEncoder.encode(createUserEntityDto.getPassword()));
         return userMapper.toDto(userDao.create(userEntity));
@@ -44,6 +47,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteById(Long id) {
+        log.warn("Service Delete UserEntity called");
         userDao.deleteById(id);
     }
 
@@ -66,12 +70,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateRoles(ChangeUserRolesDto changeUserRolesDto) {
+        log.warn(String.format("Service update Roles for user: %s", changeUserRolesDto.getUsername()));
         userDao.updateRoles(changeUserRolesDto.getUsername(), changeUserRolesDto.getRoleNames());
     }
 
     @Override
     public void updateUserDetails(String username, ChangeUserDetailsDto changeUserDetailsDto) {
-        UserEntity userEntity =  userDao.getUserByUserName(username);
+        UserEntity userEntity = userDao.getUserByUserName(username);
         userEntity.setUsername(changeUserDetailsDto.getUsername());
         userEntity.setFirstname(changeUserDetailsDto.getFirstname());
         userEntity.setLastname(changeUserDetailsDto.getLastname());

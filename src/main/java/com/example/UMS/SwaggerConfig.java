@@ -26,11 +26,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfoMetaData() {
 
-        return new ApiInfoBuilder().title("API Documentation")
-                .description("Describing the purpose of the API")
-                .contact(new Contact("Dev-Team", "https://www.payment.example.com/", "nzuwera2002@gmail.com"))
-                .license("Apache 2.0")
-                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
+        return new ApiInfoBuilder().title("UMS API Documentation")
+                .contact(new Contact("Hadj Ali Mazen", "https://www.linkedin.com/in/hadjalimazen/", "hadjalimazen@gmail.com"))
                 .version("1.0.0")
                 .build();
     }

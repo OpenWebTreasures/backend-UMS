@@ -1,10 +1,7 @@
 package com.example.UMS.features.role.dto;
 
 import com.example.UMS.features.role.model.Feature;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.Instant;
 import java.util.List;
@@ -13,6 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class RoleDto {
     private String name;
     private Instant createdOn;
