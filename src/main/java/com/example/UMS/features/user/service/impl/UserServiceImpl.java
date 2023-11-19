@@ -73,10 +73,9 @@ public class UserServiceImpl implements UserService {
     @ExceptionHandler
     public void changeSelfPassword(ChangeSelfPasswordDto changeSelfPasswordDto) {
         UserEntity userEntity = userDao.getUserByUserName(changeSelfPasswordDto.getUsername());
-        if (userEntity.getPassword() != passwordEncoder.encode(changeSelfPasswordDto.getCurrentPassword()))
+        if (!passwordEncoder.matches(changeSelfPasswordDto.getCurrentPassword(), userEntity.getPassword()))
             throw new RuntimeException("incorrect current passwords!");
         userDao.updatePassword(changeSelfPasswordDto.getUsername(), passwordEncoder.encode(changeSelfPasswordDto.getPassword()));
-
     }
 
     @Override
