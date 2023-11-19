@@ -16,16 +16,10 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class UMSExceptionHandler {
 
-    private final ErrorObjectService errorObjectService;
-
     @ExceptionHandler(RuntimeException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> test(RuntimeException ex) {
-//        ErrorObject errorObject = new ErrorObject();
-//        errorObject.setStatusCode(500);
-//        errorObject.setMessage(ex.getMessage());
-//        errorObjectService.create(errorObject);
         return Map.of("message", "Error have been occurred ! details was  ".concat(ex.getMessage()));
     }
 }

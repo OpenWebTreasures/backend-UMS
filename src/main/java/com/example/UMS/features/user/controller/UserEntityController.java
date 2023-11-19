@@ -1,10 +1,7 @@
 package com.example.UMS.features.user.controller;
 
 import com.example.UMS.features.common.ResponseHandler;
-import com.example.UMS.features.user.dto.ChangeUserDetailsDto;
-import com.example.UMS.features.user.dto.ChangeUserPasswordDto;
-import com.example.UMS.features.user.dto.ChangeUserRolesDto;
-import com.example.UMS.features.user.dto.CreateUserEntityDto;
+import com.example.UMS.features.user.dto.*;
 import com.example.UMS.features.user.service.UserService;
 import com.example.UMS.security.RequiresFeature;
 import lombok.RequiredArgsConstructor;
@@ -33,17 +30,17 @@ public class UserEntityController {
     @PostMapping("/changeuserpassword")
     @RequiresFeature("CHANGE_ANY_USER_PASSWORD")
     public ResponseEntity changeUserPassword(@RequestBody ChangeUserPasswordDto changeUserPasswordDto) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        changeUserPasswordDto.setUsername(user.getUsername());
         userService.changeUserPassword(changeUserPasswordDto);
         return ResponseHandler.successfulResponse();
     }
 
     @PostMapping("/changeselfpassword")
     @RequiresFeature("CHANGE_SELF_PASSWORD")
-    public ResponseEntity changeSelfPassword(@RequestBody ChangeUserPasswordDto changeUserPasswordDto) {
-        userService.changeUserPassword(changeUserPasswordDto);
+    public ResponseEntity changeSelfPassword(@RequestBody ChangeSelfPasswordDto changeSelfPasswordDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        changeSelfPasswordDto.setUsername(user.getUsername());
+        userService.changeSelfPassword(changeSelfPasswordDto);
         return ResponseHandler.successfulResponse();
     }
 

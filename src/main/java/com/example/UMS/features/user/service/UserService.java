@@ -22,6 +22,7 @@ public interface UserService {
     UserEntityDto getConnectedUserDetails(String username);
 
     void changeUserPassword(ChangeUserPasswordDto changeUserPasswordDto);
+    void changeSelfPassword(ChangeSelfPasswordDto changeSelfPasswordDto);
 
     void updateRoles(ChangeUserRolesDto changeUserRolesDto);
 

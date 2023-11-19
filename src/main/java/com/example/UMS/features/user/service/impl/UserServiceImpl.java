@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.List;
 
@@ -66,6 +67,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public void changeUserPassword(ChangeUserPasswordDto changeUserPasswordDto) {
         userDao.updatePassword(changeUserPasswordDto.getUsername(), passwordEncoder.encode(changeUserPasswordDto.getPassword()));
+    }
+
+    @Override
+    @ExceptionHandler
+    public void changeSelfPassword(ChangeSelfPasswordDto changeSelfPasswordDto) {
+        UserEntity userEntity = userDao.getUserByUserName(changeSelfPasswordDto.getUsername());
+        if (userEntity.getPassword() != passwordEncoder.encode(changeSelfPasswordDto.getCurrentPassword()))
+            throw new RuntimeException("incorrect current passwords!");
+        userDao.updatePassword(changeSelfPasswordDto.getUsername(), passwordEncoder.encode(changeSelfPasswordDto.getPassword()));
+
     }
 
     @Override
