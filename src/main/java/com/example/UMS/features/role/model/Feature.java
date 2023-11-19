@@ -4,7 +4,7 @@ import java.util.List;
 
 public enum Feature {
     GET_ALL_FEATURES("GET_ALL_FEATURES"),
-    FEATURE_2("FEATURE_2"),
+    COUNT_USERS("COUNT_USERS"),
     CREATE_ROLE("CREATE_ROLE"),
     FIND_ROLE_BY_ID("FIND_ROLE_BY_ID"),
     FIND_ALL_ROLES("FIND_ALL_ROLES"),

@@ -58,6 +58,13 @@ public class UserEntityController {
         return ResponseHandler.successfulResponse(userService.getConnectedUserDetails(user.getUsername()));
     }
 
+    @GetMapping("/countusers")
+    @RequiresFeature("COUNT_USERS")
+    public ResponseEntity count() {
+        return ResponseHandler.successfulResponse(userService.countUsers());
+    }
+
+
     @GetMapping
     @RequiresFeature("FIND_ALL_USERS")
     public ResponseEntity getAllUsers() {

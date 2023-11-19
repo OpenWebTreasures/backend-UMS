@@ -73,4 +73,10 @@ public class UserEntityDaoImpl implements UserEntityDao {
         userEntityRepository.save(userEntity);
     }
 
+    @Override
+    public int countUsers() {
+        Long resLong = userEntityRepository.count();
+        return resLong.intValue();
+    }
+
 }

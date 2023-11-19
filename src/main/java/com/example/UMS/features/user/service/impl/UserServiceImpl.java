@@ -46,6 +46,12 @@ public class UserServiceImpl implements UserService {
         return userMapper.toDtos(userDao.findAll());
     }
 
+
+    @Override
+    public int countUsers() {
+        return userDao.countUsers();
+    }
+
     @Override
     public void deleteById(Long id) {
         log.warn("Service Delete UserEntity called");

@@ -15,6 +15,8 @@ public interface UserService {
 
     List<UserEntityDto> findAll();
 
+    int countUsers();
+
     void deleteById(Long id);
 
     boolean existsByUsername(String username);

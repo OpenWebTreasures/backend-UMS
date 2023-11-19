@@ -43,6 +43,7 @@ public class Initializer {
         if (!roleService.doesRoleExistByName(userRoleName)) {
             RoleDto userRole = new RoleDto();
             userRole.setName(userRoleName);
+            userRole.setFeatures(List.of(Feature.COUNT_USERS));
             roleService.createRole(userRole);
         }
     }

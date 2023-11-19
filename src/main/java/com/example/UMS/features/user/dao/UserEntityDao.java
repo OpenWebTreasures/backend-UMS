@@ -23,4 +23,6 @@ public interface UserEntityDao {
     void updateRoles(String username, List<String> rolesNames);
 
     void updateUser(UserEntity userEntity);
+
+    int countUsers();
 }
