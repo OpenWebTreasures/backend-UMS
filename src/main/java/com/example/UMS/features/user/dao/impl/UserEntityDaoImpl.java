@@ -1,5 +1,6 @@
 package com.example.UMS.features.user.dao.impl;
 
+import com.example.UMS.features.role.model.Role;
 import com.example.UMS.features.role.repository.RoleRepository;
 import com.example.UMS.features.user.dao.UserEntityDao;
 import com.example.UMS.features.user.model.UserEntity;
@@ -9,6 +10,7 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -61,9 +63,12 @@ public class UserEntityDaoImpl implements UserEntityDao {
     public void updateRoles(String username, List<String> rolesNames) {
         UserEntity userEntity = userEntityRepository.findByUsername(username).orElse(null);
         if (userEntity != null) {
-            userEntity.setRoles(rolesNames.stream()
-                    .map(roleName -> roleRepository.findByName(roleName).orElse(null))
-                    .collect(Collectors.toList()));
+            List<Role> roles = roleRepository.findByNames(rolesNames);
+
+            // Filter out null roles in case a roleName doesn't exist in the database
+            roles = roles.stream().filter(Objects::nonNull).collect(Collectors.toList());
+
+            userEntity.setRoles(roles);
             userEntityRepository.save(userEntity);
         }
     }
