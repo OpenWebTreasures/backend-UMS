@@ -1,7 +1,5 @@
 package com.example.UMS.exceptions;
 
-import com.example.UMS.exceptions.errorobject.ErrorObject;
-import com.example.UMS.exceptions.errorobject.ErrorObjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -9,7 +7,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.util.Date;
 import java.util.Map;
 
 @ControllerAdvice

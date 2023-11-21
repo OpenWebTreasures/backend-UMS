@@ -1,80 +1,38 @@
 package com.example.UMS.features.auth;
 
-import com.example.UMS.features.auth.dto.AuthResponseDTO;
-import com.example.UMS.features.auth.dto.LoginDto;
-import com.example.UMS.features.auth.dto.RegisterDto;
-import com.example.UMS.features.common.ResponseHandler;
-import com.example.UMS.features.role.dto.RoleDto;
-import com.example.UMS.features.role.model.Role;
-import com.example.UMS.features.role.repository.RoleRepository;
-import com.example.UMS.features.role.service.RoleService;
-import com.example.UMS.features.user.dto.CreateUserEntityDto;
-import com.example.UMS.features.user.dto.UserEntityDto;
-import com.example.UMS.features.user.repository.UserEntityRepository;
-import com.example.UMS.features.user.service.UserService;
-import com.example.UMS.security.JWTGenerator;
-import com.example.UMS.security.RequiresFeature;
+import com.example.UMS.features.auth.payload.RegisterRequest;
+import com.example.UMS.features.auth.payload.AuthenticationRequest;
+import com.example.UMS.features.auth.payload.AuthenticationResponse;
+import com.example.UMS.security.JwtService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
-
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
-
-    private final UserService userService;
-    private final RoleService roleService;
-
     private final AuthenticationManager authenticationManager;
-    private final JWTGenerator jwtGenerator;
+    private final JwtService jwtService;
+
+    private final AuthenticationService authenticationService;
+
+    //
+    @PostMapping("/register")
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
+        AuthenticationResponse authenticationResponse = authenticationService.register(request);
+        return ResponseEntity.ok()
+                .body(authenticationResponse);
+    }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDto loginDto) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginDto.getUsername(),
-                        loginDto.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtGenerator.generateToken(authentication);
-        System.out.println(token);
-        return new ResponseEntity<>(new AuthResponseDTO(token), HttpStatus.OK);
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
+        AuthenticationResponse authenticationResponse = authenticationService.authenticate(request);
+        return ResponseEntity.ok().body(authenticationResponse);
     }
 
-
-    @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
-        if (userService.existsByUsername(registerDto.getUsername())) {
-            return new ResponseEntity<>("Username is taken!", HttpStatus.BAD_REQUEST);
-        }
-
-        CreateUserEntityDto createUserEntityDto = new CreateUserEntityDto();
-        createUserEntityDto.setFirstname(registerDto.getFirstname());
-        createUserEntityDto.setLastname(registerDto.getLastname());
-        createUserEntityDto.setEmail(registerDto.getEmail());
-        createUserEntityDto.setDatenaissance(registerDto.getDate());
-        createUserEntityDto.setNationality(registerDto.getNationality());
-        createUserEntityDto.setAdress(registerDto.getAdress());
-        createUserEntityDto.setUsername(registerDto.getUsername());
-        createUserEntityDto.setPassword(registerDto.getPassword());
-
-        RoleDto role = roleService.findRoleByName("USER");
-        createUserEntityDto.setRoleNames(Collections.singletonList(role.getName()));
-
-        userService.create(createUserEntityDto);
-
-        return ResponseHandler.successfulResponse("User Registred");
-    }
 }

@@ -1,4 +1,4 @@
-package com.example.UMS.features.auth.dto;
+package com.example.UMS.features.auth.payload;
 
 import com.example.UMS.features.common.Nationality;
 import lombok.*;
@@ -9,7 +9,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterDto {
+public class RegisterRequest {
     private String firstname;
     private String lastname;
     private String email;
