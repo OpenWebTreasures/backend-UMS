@@ -11,6 +11,7 @@ import com.example.UMS.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserEntityDao userEntityDao;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
+
 
     @Override
     public AuthenticationResponse register(RegisterRequest registerRequest) {
@@ -38,7 +41,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         userEntity.setNationality(registerRequest.getNationality());
         userEntity.setAdress(registerRequest.getAdress());
         userEntity.setUsername(registerRequest.getUsername());
-        userEntity.setPassword(registerRequest.getPassword());
+        userEntity.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
 
         Role role = roleDao.findByName("USER");
         userEntity.setRoles(List.of(role));
