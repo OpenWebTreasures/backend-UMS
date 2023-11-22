@@ -721,3 +721,34 @@ Caused by: java.net.ConnectException: Connection refused: no further information
 2023-11-22 09:15:35.651  INFO 22784 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2023-11-22 09:15:35.652  INFO 22784 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
 2023-11-22 09:16:32.012  WARN 22784 --- [http-nio-8080-exec-2] c.e.U.f.role.controller.RoleController   : Service call : Assign Feature: FIND_ALL_ROLES To Role : USER
+2023-11-22 09:20:38.780  INFO 22784 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 09:20:38.781  INFO 22784 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-11-22 09:20:38.785  INFO 22784 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-11-22 09:43:29.249  INFO 3104 --- [main] com.example.UMS.UmsApplication           : Starting UmsApplication using Java 20.0.2 on HadjAliMazen with PID 3104 (C:\Users\hadja\Desktop\UMS\backend-UMS\target\classes started by hadja in C:\Users\hadja\Desktop\UMS\backend-UMS)
+2023-11-22 09:43:29.252  INFO 3104 --- [main] com.example.UMS.UmsApplication           : No active profile set, falling back to 1 default profile: "default"
+2023-11-22 09:43:30.258  INFO 3104 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-11-22 09:43:30.320  INFO 3104 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 55 ms. Found 2 JPA repository interfaces.
+2023-11-22 09:43:30.878  INFO 3104 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-11-22 09:43:30.884  INFO 3104 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-11-22 09:43:30.884  INFO 3104 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.82]
+2023-11-22 09:43:30.972  INFO 3104 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-11-22 09:43:30.972  INFO 3104 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1667 ms
+2023-11-22 09:43:31.152  INFO 3104 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-11-22 09:43:31.198  INFO 3104 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.15.Final
+2023-11-22 09:43:31.355  INFO 3104 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-11-22 09:43:31.450  INFO 3104 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-11-22 09:43:31.562  INFO 3104 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-11-22 09:43:31.578  INFO 3104 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-11-22 09:43:32.219  INFO 3104 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-11-22 09:43:32.228  INFO 3104 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-11-22 09:43:32.868  INFO 3104 --- [main] c.e.U.f.u.service.impl.UserServiceImpl   : Service create UserEntity called details:CreateUserEntityDto(super=UserEntityDto(id=null, firstname=Mazen, lastname=Hadj Ali, email=hadjalimazen@gmail.com, datenaissance=Wed Nov 22 09:43:32 CET 2023, nationality=Tunisian, adress=Bennane, Monastir, Tunisia, username=superadmin, roleNames=[SUPERADMIN], createdOn=null, lastUpdatedOn=null), password=superadmin)
+2023-11-22 09:43:33.517  INFO 3104 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@502dc93a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@486d1868, org.springframework.security.web.context.SecurityContextPersistenceFilter@12faeada, org.springframework.security.web.header.HeaderWriterFilter@139da216, org.springframework.web.filter.CorsFilter@5d4af473, org.springframework.security.web.authentication.logout.LogoutFilter@12f32f99, com.example.UMS.security.JwtAuthenticationFilter@39b9dc35, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@73ccdfc1, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@17fa25f1, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@50ac63b2, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@31f96cf, org.springframework.security.web.session.SessionManagementFilter@7ecca48, org.springframework.security.web.access.ExceptionTranslationFilter@2f6f2d91, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@65011123]
+2023-11-22 09:43:33.847  INFO 3104 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2023-11-22 09:43:34.102  INFO 3104 --- [main] com.example.UMS.UmsApplication           : Started UmsApplication in 5.285 seconds (JVM running for 5.926)
+2023-11-22 09:44:08.597  INFO 3104 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-11-22 09:44:08.598  INFO 3104 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-11-22 09:44:08.599  INFO 3104 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-11-22 09:54:24.108  WARN 3104 --- [http-nio-8080-exec-6] c.e.U.f.u.service.impl.UserServiceImpl   : Service update Roles for user: superadmin
+2023-11-22 09:55:25.825  WARN 3104 --- [http-nio-8080-exec-3] c.e.U.f.role.controller.RoleController   : Creating New Role :RoleDto(name=qzrgzrb, createdOn=null, lastUpdatedOn=null, features=null)
+2023-11-22 09:55:42.685  WARN 3104 --- [http-nio-8080-exec-3] c.e.U.f.role.controller.RoleController   : Service call : Assign Feature: FIND_ALL_ROLES To Role : USER
+2023-11-22 09:56:14.793  WARN 3104 --- [http-nio-8080-exec-10] c.e.U.f.role.controller.RoleController   : Creating New Role :RoleDto(name=Enseignat, createdOn=null, lastUpdatedOn=null, features=null)
