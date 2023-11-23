@@ -1,13 +1,8 @@
 package com.example.UMS.features.user.mappers;
 
 import com.example.UMS.features.role.dao.RoleDao;
-import com.example.UMS.features.role.model.Role;
-import com.example.UMS.features.user.dao.UserEntityDao;
 import com.example.UMS.features.user.dto.UserEntityDto;
 import com.example.UMS.features.user.model.UserEntity;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Component;

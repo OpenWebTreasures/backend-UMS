@@ -44,7 +44,6 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-
                 .antMatchers(
                         "/auth/**",
                         "/v2/api-docs",
@@ -57,7 +56,6 @@ public class SecurityConfig {
                         "/swagger-ui/**",
                         "/webjars/**",
                         "/swagger-ui.html"
-
                 ).permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -65,7 +63,6 @@ public class SecurityConfig {
                 .and()
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
-
     }
 
     @Bean

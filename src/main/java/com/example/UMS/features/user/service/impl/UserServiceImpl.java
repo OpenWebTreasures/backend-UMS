@@ -1,6 +1,5 @@
 package com.example.UMS.features.user.service.impl;
 
-import com.example.UMS.features.role.model.Role;
 import com.example.UMS.features.user.dao.UserEntityDao;
 import com.example.UMS.features.user.dto.*;
 import com.example.UMS.features.user.mappers.UserMapper;
@@ -8,8 +7,6 @@ import com.example.UMS.features.user.model.UserEntity;
 import com.example.UMS.features.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,9 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -42,11 +37,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntityDto getUserById(Long id) {
         return userMapper.toDto(userDao.getUserById(id));
-    }
-
-    @Override
-    public UserEntityDto getUserByUserName(String userName) {
-        return userMapper.toDto(userDao.getUserByUserName(userName));
     }
 
     @Override
@@ -117,12 +107,6 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UsernameNotFoundException(String.format("User with Username: %s not found", username));
         }
-        return new User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
-    }
-
-    private Collection<GrantedAuthority> mapRolesToAuthorities(List<Role> roles) {
-        return roles.stream()
-                .map(role -> new SimpleGrantedAuthority(String.format("%s", role.getName())))
-                .collect(Collectors.toList());
+        return new User(user.getUsername(), user.getPassword(), user.getAuthorities());
     }
 }
