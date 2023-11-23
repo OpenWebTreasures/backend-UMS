@@ -16,8 +16,8 @@ public class ChangeUserDetailsDto {
     private String firstname;
     private String lastname;
     private String email;
-    private Date datenaissance;
+    private Date birthDate;
     private Nationality nationality;
-    private String adress;
+    private String address;
     private String username;
 }

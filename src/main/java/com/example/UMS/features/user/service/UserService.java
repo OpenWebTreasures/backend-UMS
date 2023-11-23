@@ -2,11 +2,12 @@ package com.example.UMS.features.user.service;
 
 import com.example.UMS.features.user.dto.*;
 import com.example.UMS.features.user.model.UserEntity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
     UserEntityDto create(CreateUserEntityDto createUserEntityDto);
 
     UserEntityDto getUserById(Long id);

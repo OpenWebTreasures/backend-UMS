@@ -5,10 +5,13 @@ import com.example.UMS.features.role.model.Role;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +21,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class UserEntity {
+public class UserEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,13 +31,14 @@ public class UserEntity {
 
     private String lastname;
 
+    @Column(unique = true)
     private String email;
 
-    private Date datenaissance;
+    private Date birthDate;
 
     private Nationality nationality;
 
-    private String adress;
+    private String address;
 
     @Column(unique = true)
     private String username;
@@ -50,4 +54,29 @@ public class UserEntity {
     private Instant createdOn;
     @UpdateTimestamp
     private Instant lastUpdatedOn;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
 }

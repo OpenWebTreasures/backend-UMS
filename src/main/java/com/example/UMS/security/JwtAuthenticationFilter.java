@@ -1,5 +1,6 @@
 package com.example.UMS.security;
 
+import com.example.UMS.features.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,11 +23,7 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final CustomUserDetailsService userDetailsService;
-
-    /**
-     * implementation is provided in config.ApplicationSecurityConfig
-     */
+    private final UserService userService;
 
     @Override
     protected void doFilterInternal(
@@ -42,11 +39,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         String jwt = authHeader.substring(7);
 
-        final String userEmail = jwtService.extractUserName(jwt);
+        final String userName = jwtService.extractUserName(jwt);
 
-        if (!StringUtils.isEmpty(userEmail)
+        if (!StringUtils.isEmpty(userName)
                 && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+            UserDetails userDetails = this.userService.loadUserByUsername(userName);
             if (jwtService.isTokenValid(jwt, userDetails)) {
                 //update the spring security context by adding a new UsernamePasswordAuthenticationToken
                 SecurityContext context = SecurityContextHolder.createEmptyContext();

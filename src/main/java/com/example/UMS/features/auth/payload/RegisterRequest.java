@@ -13,9 +13,9 @@ public class RegisterRequest {
     private String firstname;
     private String lastname;
     private String email;
-    private Date date;
+    private Date birthDate;
     private Nationality nationality;
-    private String adress;
+    private String address;
     private String username;
     private String password;
 }
