@@ -1,5 +1,6 @@
 package com.example.UMS.security;
 
+import com.example.UMS.features.role.model.Feature;
 import com.example.UMS.features.user.dao.UserEntityDao;
 import com.example.UMS.features.user.model.UserEntity;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class AuthorizationAspect {
     public void checkUserRole(RequiresFeature requiresFeature) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof User user) {
-            String feature = requiresFeature.value();
+            Feature feature = requiresFeature.value();
             if (userHasRoleForFeature(user.getUsername(), feature)) {
                 return;
             }
@@ -30,12 +31,12 @@ public class AuthorizationAspect {
         throw new AuthorizationServiceException("not authorized ");
     }
 
-    private boolean userHasRoleForFeature(String username, String feature) {
+    private boolean userHasRoleForFeature(String username, Feature feature) {
         UserEntity userEntity = userEntityDao.getUserByUserName(username);
         if (userEntity != null) {
             return userEntity.getRoles().stream()
                     .anyMatch(role -> role.getFeatures().stream()
-                            .anyMatch(f -> f.getFeatureName().equals(feature)));
+                            .anyMatch(f -> f.equals(feature)));
         }
         return false;
     }

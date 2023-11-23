@@ -18,7 +18,7 @@ public class FeatureController {
 
 
     @GetMapping
-    @RequiresFeature("GET_ALL_FEATURES")
+    @RequiresFeature(Feature.GET_ALL_FEATURES)
     public ResponseEntity getAllFeatures() {
         return ResponseHandler.successfulResponse(Feature.getAll());
     }

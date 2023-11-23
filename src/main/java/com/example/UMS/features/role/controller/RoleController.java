@@ -3,6 +3,7 @@ package com.example.UMS.features.role.controller;
 import com.example.UMS.features.common.ResponseHandler;
 import com.example.UMS.features.role.dto.FeatureRoleDto;
 import com.example.UMS.features.role.dto.RoleDto;
+import com.example.UMS.features.role.model.Feature;
 import com.example.UMS.features.role.model.Role;
 import com.example.UMS.features.role.service.RoleService;
 import com.example.UMS.security.RequiresFeature;
@@ -24,20 +25,20 @@ public class RoleController {
     private final RoleService roleService;
 
     @PostMapping
-    @RequiresFeature("CREATE_ROLE")
+    @RequiresFeature(Feature.CREATE_ROLE)
     public ResponseEntity createRole(@RequestBody RoleDto roleDto) {
         log.warn("Creating New Role :"+roleDto.toString());
         return ResponseHandler.successfulResponse(roleService.createRole(roleDto));
     }
 
     @GetMapping
-    @RequiresFeature("FIND_ALL_ROLES")
+    @RequiresFeature(Feature.FIND_ALL_ROLES)
     public ResponseEntity findAllRoles() {
         return ResponseHandler.successfulResponse(roleService.findAllRoles());
     }
 
     @PostMapping("/assignfeature")
-    @RequiresFeature("ASSIGN_FEATURE_TO_ROLE")
+    @RequiresFeature(Feature.ASSIGN_FEATURE_TO_ROLE)
     public ResponseEntity addFeatureToRole(@RequestBody FeatureRoleDto featureRoleDto) {
         log.warn(String.format("Service call : Assign Feature: %s To Role : %s", featureRoleDto.getFeatureName(),featureRoleDto.getRoleName()));
         roleService.addFeatureToRole(featureRoleDto.getRoleName(), featureRoleDto.getFeatureName());
@@ -45,7 +46,7 @@ public class RoleController {
     }
 
     @PostMapping("/revokefeature")
-    @RequiresFeature("REVOKE_FEATURE_TO_ROLE")
+    @RequiresFeature(Feature.REVOKE_FEATURE_TO_ROLE)
     public ResponseEntity revokeFeatureFromRole(@RequestBody FeatureRoleDto featureRoleDto) {
         log.warn(String.format("Service call : Revoke Feature: %s from Role : %s", featureRoleDto.getFeatureName(),featureRoleDto.getRoleName()));
 
@@ -54,7 +55,7 @@ public class RoleController {
     }
 
     @GetMapping("/{name}")
-    @RequiresFeature("FIND_ROLE_BY_NAME")
+    @RequiresFeature(Feature.FIND_ROLE_BY_NAME)
     public ResponseEntity findRoleByName(@PathVariable String name) {
         return ResponseHandler.successfulResponse(roleService.findRoleByName(name));
     }
